@@ -1,12 +1,5 @@
 # encoding: utf-8
 
-# Redirects
-require 'rack/rewrite'
-
-use ::Rack::Rewrite do
-  r301 %r{\A/([\d\(\)\-\+ %]+)/?}, "#{root}/$1"
-end
-
 # Static Routes
 require File.expand_path('../rack_try_static', __FILE__)
 use ::Rack::TryStatic, root: 'build', urls: ['/'], try: ['.html', 'index.html', '/index.html']
