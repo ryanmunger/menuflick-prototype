@@ -1,0 +1,15 @@
+doctype html
+html ng-app="MenuFlick"
+  head
+    meta charset="utf-8"
+    meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"
+    meta name="HandheldFriendly" content="True"
+    meta name="MobileOptimized" content="320"
+    meta name="viewport" content="width=device-width, initial-scale=1"
+    title= current_page.data.title || "Learning Angular JS Tutorial"
+    = stylesheet_link_tag "normalize", "all"
+    script src="http://code.angularjs.org/1.1.5/angular.js"
+    script src="http://code.angularjs.org/1.1.5/angular-mobile.js"
+    = javascript_include_tag "all"
+  body class=(page_classes) ng-controller="MainController"
+    = yield

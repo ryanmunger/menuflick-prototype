@@ -1,0 +1,10 @@
+.input-wrapper
+  input type="text" ng-model="searchItems"
+ul 
+  li ng-repeat="item in items | filter:searchItems" ng-swipe-right="upVote($index)" ng-swipe-left="downVote($index)"
+    span.name
+      ' {{item.name}}
+    span.rating
+      ' {{item.rating}}
+    span.restaurant
+      ' {{item.restaurant}}
