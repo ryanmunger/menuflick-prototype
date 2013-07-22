@@ -7,6 +7,8 @@ gem "slim"
 gem "sass"
 gem "coffee-script"
 gem "bourbon"
+gem 'thin'
+gem 'rack-rewrite', '~> 1.2.1'
 
 # Live-reloading plugin
 gem "middleman-livereload", "~> 3.1.0"
