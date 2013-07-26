@@ -1,57 +1,28 @@
-angular.module('MenuFlick', ['ngMobile'])
-  .controller "MainController", ($scope) ->
-    $scope.items = [
-      id: 0
-      restaurant: "Rudy's Tacos"
-      name: "Carne Asada Burrito"
-      rating: 0
-    ,
-      id: 1
-      restaurant: "Blue Ribbon Pizza"
-      name: "Red Oak Pizza"
-      rating: 0
-    ,
-      id: 2
-      restaurant: "Blue Ribbon Pizza"
-      name: "Cheese Pizza"
-      rating: 0
-    ,
-      id: 3
-      restaurant: "Sake House"
-      name: "Takoyaki (Octopus)"
-      rating: 0
-    ,
-      id: 4
-      restaurant: "Mrs. Taco"
-      name: "Carne Asada Burrito"
-      rating: 0
-    ,
-      id: 5
-      restaurant: "Tin Leaf Kitchen"
-      name: "Thanksgiving On A Bun"
-      rating: 0
-    ,
-      id: 6
-      restaurant: "Riki Sushi"
-      name: "California Roll"
-      rating: 0
-    ,
-      id: 7
-      restaurant: "Riki Sushi"
-      name: "Salmon Roll"
-      rating: 0
-    ,
-      id: 8
-      restaurant: "Mama's And Papa's"
-      name: "Spaghetti and Meatball"
-      rating: 0
-    ,
-      id: 9
-      restaurant: "Two Brother's From Italy"
-      name: "Cheese Pizza"
-      rating: 0
-    ]
-    $scope.upVote = (index) ->
-      $scope.items[index].rating++
-    $scope.downVote = (index) ->
-      $scope.items[index].rating--
+angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
+
+  .config(['$routeProvider', ($routeProvider) ->
+    $routeProvider
+      .when('/', templateUrl: 'main.html', controller: 'MainController')
+      .when('/login', templateUrl: 'login.html', controller: 'LoginController')
+      .otherwise(redirectTo: '/')
+  ])
+
+  .controller("LoginController", ['$scope', '$http', 'localStorageService', ($scope, $http, localStorageService) ->
+    localStorageService.clearAll()
+    localStorageService.add('key','Add this!')
+    value = localStorageService.get('key')
+    console.log value
+  ])
+  
+  .controller("MainController", ['$scope', '$http', 'localStorageService', ($scope, $http, localStorageService) ->
+    $scope.getLocation = ->
+      window.navigator.geolocation.getCurrentPosition (position) ->
+        $scope.$apply ->
+          $http(
+            method: "GET"
+            url: "http://mfbackend.appspot.com/json/items?latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude + "&radius=30000"
+          ).success((data, status, headers, config) ->
+            $scope.items = data.items
+            console.log data
+          ).error (data, status, headers, config) ->
+  ])

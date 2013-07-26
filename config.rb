@@ -38,12 +38,19 @@
 # Reload the browser automatically whenever files change
 # activate :livereload
 
-# Methods defined in the helpers block are available in templates
-# helpers do
-#   def some_helper
-#     "Helping"
-#   end
-# end
+helpers do
+
+  def angular_include_templates(path = 'templates')
+    ''.tap do |html|
+      Dir[File.join('source', path, '*')].each do |filename|
+        template = File.basename(filename, '.*')
+        next unless template.slice!(0) == '_'
+        html << content_tag(:script, partial(File.join(path, template)), type: "text/ng-template", id: "#{template}.html")
+      end
+    end
+  end
+
+end
 
 set :css_dir, 'stylesheets'
 
