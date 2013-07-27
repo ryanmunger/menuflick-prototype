@@ -8,10 +8,11 @@ html ng-app="MenuFlick"
     meta name="viewport" content="width=device-width, initial-scale=1"
     title= current_page.data.title || "Learning Angular JS Tutorial"
     = stylesheet_link_tag "normalize", "all"
+    script src="http://code.jquery.com/jquery-2.0.3.js"
     script src="http://code.angularjs.org/1.1.5/angular.js"
     script src="http://code.angularjs.org/1.1.5/angular-mobile.js"
     = javascript_include_tag "localStorageModule"
     = javascript_include_tag "all"
-  body class=(page_classes) 
+  body class=(page_classes) ng-controller="MainAppController"
     == angular_include_templates
     #content ng-view=""
