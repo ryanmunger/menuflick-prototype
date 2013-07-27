@@ -1,9 +1,9 @@
 #login ng-controller="LoginController"
   form ng-submit="login()"
     .input-wrapper
-      input type="text" ng-model="user.username"
+      input type="text" ng-model="user.username" autocapitalize="off"
     .input-wrapper
-      input type="password" ng-model="user.password"
+      input type="password" ng-model="user.password" autocapitalize="off"
     .button-container
       button.login type="submit"
         ' Login
