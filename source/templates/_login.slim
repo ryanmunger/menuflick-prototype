@@ -1,9 +1,12 @@
-#login ng-controller="LoginController"
-  form ng-submit="login()"
-    .input-wrapper
-      input type="text" ng-model="user.username" autocapitalize="off"
-    .input-wrapper
-      input type="password" ng-model="user.password" autocapitalize="off"
-    .button-container
-      button.login type="submit"
-        ' Login
+div ng-controller="MainAppController"
+  #login ng-controller="LoginController"
+    h1 Login to MenuFlick
+    form ng-submit="login()"
+      .input-wrapper
+        input type="text" ng-model="user.username" autocapitalize="off" placeholder="Username"
+      .input-wrapper
+        input type="password" ng-model="user.password" autocapitalize="off" placeholder="Password"
+      .button-container
+        button.submit type="submit"
+          ' Login
+      a style="text-align: center; display: block; margin-top: 20px;" href="/#/sign-up" Sign Up

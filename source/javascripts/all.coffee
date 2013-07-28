@@ -2,10 +2,11 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
 
   .config(['$routeProvider', ($routeProvider) ->
     $routeProvider
-      .when('/leaderboards', templateUrl: 'leaderboards.html', controller: 'LeaderBoardsController')
+      .when('/', templateUrl: 'leaderboards.html', controller: 'LeaderBoardsController')
       .when('/login', templateUrl: 'login.html', controller: 'LoginController')
+      .when('/sign-up', templateUrl: 'sign-up.html', controller: 'SignUpController')
       .when('/404', templateUrl: '404.html')
-      .otherwise(redirectTo: '/404')
+      .otherwise(redirectTo: '/login')
   ])
 
   .controller("MainAppController", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
@@ -35,11 +36,32 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
         console.log data
         console.log config
         if data.response == 1
-          $location.path('/leaderboards')
+          $location.path('/')
           localStorageService.add('authToken', data.auth_token)
           $scope.$apply
         else
           alert "you've entered the wrong info!"
+      ).error (data, status, headers, config) ->
+  ])
+  
+  .controller("SignUpController", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
+    $scope.signUp = ->
+
+      $http(
+        method: 'POST',
+        url: 'http://mfbackend.appspot.com/json/signup',
+        data: $.param(
+          username: $scope.user.username
+          password: $scope.user.password
+        ),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      ).success((data, status, headers, config) ->
+        if data.response == 1
+          alert "Thank you for signing up! You can now sign in!"
+          $location.path('/login')
+          $scope.$apply
+        console.log data
+        console.log config
       ).error (data, status, headers, config) ->
   ])
   

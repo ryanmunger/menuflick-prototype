@@ -1,12 +1,13 @@
-#conent ng-controller="LeaderBoardsController" ng-init="getLocation()"
-  ul
-    li ng-repeat="item in items | filter:searchText"
-      ' {{item.name}}
-      br
-      ' Rating: {{item.rating}}
-      br
-      ' Distance: {{item.distance}}
-      br
-      ' {{item.restaurantname}}
-  button ng-click="logout()"
-    ' Logout
+div ng-controller="MainAppController"
+  #conent ng-controller="LeaderBoardsController" ng-init="getLocation()"
+    ul
+      li ng-repeat="item in items | filter:searchText"
+        ' {{item.name}}
+        br
+        ' Rating: {{item.rating}}
+        br
+        ' Distance: {{item.distance}}
+        br
+        ' {{item.restaurantname}}
+    button ng-click="logout()"
+      ' Logout

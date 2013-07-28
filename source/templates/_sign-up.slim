@@ -1,0 +1,11 @@
+h1 Sign Up for a MenuFlick account
+#sign-up ng-controller="SignUpController"
+  form ng-submit="signUp()"
+    .input-wrapper
+      input type="text" ng-model="user.username" autocapitalize="off" placeholder="Username"
+    .input-wrapper
+      input type="password" ng-model="user.password" autocapitalize="off" placeholder="Password"
+    .button-container
+      button.submit type="submit"
+        ' Sign Up
+    a href="/#/login" style="display: block; text-align: center; margin-top: 20px;" Back to Login Page
