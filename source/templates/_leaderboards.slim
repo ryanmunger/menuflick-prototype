@@ -1,6 +1,6 @@
 == partial "partials/header"
 div ng-controller="MainAppController"
-  #conent ng-controller="LeaderBoardsController" ng-init="getLocation()"
+  #conent.leaderboards ng-controller="LeaderBoardsController" ng-init="getLocation()"
     ul
       li ng-repeat="item in items | filter:searchText"
         ' {{item.name}}

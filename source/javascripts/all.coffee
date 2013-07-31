@@ -6,6 +6,7 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
       .when('/login', templateUrl: 'login.html', controller: 'LoginController')
       .when('/sign-up', templateUrl: 'sign-up.html', controller: 'SignUpController')
       .when('/submit-item', templateUrl: 'submit-item.html', controller: 'SubmitItemController')
+      .when('/profile', templateUrl: 'profile.html', controller: 'ProfileController')
       .when('/404', templateUrl: '404.html')
       .otherwise(redirectTo: '/login')
   ])
@@ -51,6 +52,7 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
         method: 'POST',
         url: 'http://mfbackend.appspot.com/json/signup',
         data: $.param(
+          username: $scope.user.email
           username: $scope.user.username
           password: $scope.user.password
         ),
@@ -63,6 +65,9 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
         console.log data
         console.log config
       ).error (data, status, headers, config) ->
+  ])
+
+  .controller("ProfileController", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
   ])
 
   .controller("SubmitItemController", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
