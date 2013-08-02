@@ -52,9 +52,10 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
         method: 'POST',
         url: 'http://mfbackend.appspot.com/json/signup',
         data: $.param(
-          username: $scope.user.email
+          email: $scope.user.email
           username: $scope.user.username
           password: $scope.user.password
+          passwordtwo: $scope.user.passwordtwo
         ),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       ).success((data, status, headers, config) ->
