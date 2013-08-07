@@ -1,14 +1,19 @@
 == partial "partials/header"
-div ng-controller="MainAppController"
-  #conent.leaderboards ng-controller="LeaderBoardsController" ng-init="getLocation()"
-    ul
-      li ng-repeat="item in items | filter:searchText"
+#conent.leaderboards ng-init="getLocation()"
+  ul
+    li ng-repeat="item in items | filter:searchText"
+      a ng-href="#/items/{{item.itemid}}" 
         ' {{item.name}}
-        br
-        ' Rating: {{item.rating}}
-        br
-        ' Distance: {{item.distance}}
-        br
-        ' {{item.restaurantname}}
-    button ng-click="logout()"
-      ' Logout
+      br
+      ' Rating: {{item.rating}}
+      br
+      ' Distance: {{item.distance}}
+      br
+      ' {{item.restaurantname}}
+      ' {{item.itemid}}
+      button#rate-up ng-click="rateItem(1)" style="display: block; width: 100%; margin-bottom: 10px; margin-top: 10px;"
+        ' +
+      button#rate-down ng-click="rateItem(0)" style="display: block; width: 100%;"
+        ' -
+  button ng-click="logout()"
+    ' Logout
