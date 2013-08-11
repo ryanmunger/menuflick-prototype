@@ -79,7 +79,7 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
       method: "GET"
       url: "http://mfbackend.appspot.com/json/getitem?itemid=" + $routeParams.itemid
     ).success((data, status, headers, config) ->
-      $scope.item = data
+      $scope.items = data
     ).error (data, status, headers, config) ->
   ])
 
@@ -92,26 +92,25 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
           $http(
             method: "GET"
             url: "http://mfbackend.appspot.com/json/items?latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude + "&radius=30000"
-          ).success((data, status, headers, config) ->
-            $scope.items = data.items
+          ).success((itemData, status, headers, config) ->
+            $scope.items = itemData.items
+            $scope.rateItem = (rating, itemid, itemRating, i) ->
+              console.log itemid
+              reviewUrl = 'http://mfbackend.appspot.com/json/reviewitem'
+              $http(
+                method: 'POST',
+                url: reviewUrl,
+                data: $.param(
+                  userid: userId
+                  authtoken: authValue
+                  itemid: itemid
+                  rating: rating
+                ),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+              ).success((ratingData, status, headers, config) ->
+                console.log $scope.items[i].rating = ratingData.rating
+              ).error (data, status, headers, config) ->
           ).error (data, status, headers, config) ->
 
-    $scope.rateItem = (rating, itemid) ->
-      console.log itemid
-      reviewUrl = 'http://mfbackend.appspot.com/json/reviewitem'
-      $http(
-        method: 'POST',
-        url: reviewUrl,
-        data: $.param(
-          userid: userId
-          authtoken: authValue
-          itemid: itemid
-          rating: rating
-        ),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      ).success((data, status, headers, config) ->
-        console.log data
-        console.log config
-      ).error (data, status, headers, config) ->
 
   ])
