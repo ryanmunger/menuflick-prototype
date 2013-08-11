@@ -12,10 +12,9 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
       .otherwise(redirectTo: '/login')
   ])
 
-  .controller("AppCtrl", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
+  .controller("AppCtrl", ['$scope', '$rootScope', '$http', 'localStorageService', '$location', ($scope, $rootScope, $http, localStorageService, $location) ->
     authValue = localStorageService.get('authToken')
     userId = localStorageService.get('userId')
-    console.log authValue
     if authValue == null
       $location.path('/login')
       $scope.$apply
@@ -24,16 +23,6 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
       $location.path('/login')
       $scope.$apply
 
-    $scope.rateItem = (rating) ->
-      reviewUrl = 'http://mfbackend.appspot.com/json/reviewitem'
-
-      data =
-        userid: userId
-        authtoken: authValue
-        itemid: 15001
-        rating: rating
-
-      $http.post(reviewUrl, data).success(console.log "success!")
   ])
 
   .controller("LoginCtrl", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
@@ -48,8 +37,6 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
         ),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       ).success((data, status, headers, config) ->
-        console.log data
-        console.log config
         if data.response == 1
           $location.path('/')
           localStorageService.add('authToken', data.auth_token)
@@ -77,8 +64,6 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
           alert "Thank you for signing up! You can now sign in!"
           $location.path('/login')
           $scope.$apply
-        console.log data
-        console.log config
       ).error (data, status, headers, config) ->
   ])
 
@@ -95,14 +80,12 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
       url: "http://mfbackend.appspot.com/json/getitem?itemid=" + $routeParams.itemid
     ).success((data, status, headers, config) ->
       $scope.item = data
-      console.log data
     ).error (data, status, headers, config) ->
   ])
 
-  .controller("LeaderBoardsCtrl", ['$scope', '$http', 'localStorageService', ($scope, $http, localStorageService) ->
+  .controller("LeaderBoardsCtrl", ['$scope', '$rootScope', '$http', 'localStorageService', ($scope, $rootScope, $http, localStorageService) ->
     authValue = localStorageService.get('authToken')
     userId = localStorageService.get('userId')
-    console.log authValue
     $scope.getLocation = ->
       window.navigator.geolocation.getCurrentPosition (position) ->
         $scope.$apply ->
@@ -111,6 +94,24 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
             url: "http://mfbackend.appspot.com/json/items?latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude + "&radius=30000"
           ).success((data, status, headers, config) ->
             $scope.items = data.items
-            console.log data
           ).error (data, status, headers, config) ->
+
+    $scope.rateItem = (rating, itemid) ->
+      console.log itemid
+      reviewUrl = 'http://mfbackend.appspot.com/json/reviewitem'
+      $http(
+        method: 'POST',
+        url: reviewUrl,
+        data: $.param(
+          userid: userId
+          authtoken: authValue
+          itemid: itemid
+          rating: rating
+        ),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      ).success((data, status, headers, config) ->
+        console.log data
+        console.log config
+      ).error (data, status, headers, config) ->
+
   ])
