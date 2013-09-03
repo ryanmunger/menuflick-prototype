@@ -8,6 +8,7 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
       .when('/sign-up', templateUrl: 'sign-up.html', controller: 'SignUpCtrl')
       .when('/submit-item', templateUrl: 'submit-item.html', controller: 'SubmitItemCtrl')
       .when('/profile', templateUrl: 'profile.html', controller: 'ProfileCtrl')
+      .when('/test', templateUrl: 'test.html', controller: 'TestCtrl')
       .when('/404', templateUrl: '404.html')
       .otherwise(redirectTo: '/login')
   ])
@@ -70,8 +71,27 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
   .controller("ProfileCtrl", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
   ])
 
-  .controller("SubmitItemCtrl", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
-    $scope.submitItem = ->
+  .controller("TestCtrl", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
+    $scope.submitItem  = (rating) ->
+      reviewUrl = 'http://mfbackend.appspot.com/json/reviewitem'
+      $http(
+        method: 'POST',
+        url: reviewUrl,
+        data: $.param(
+          userid: '43001'
+          authtoken: '3Ccjm92ePBJ1BkZMSinVzY'
+          itemid: ''
+          itemname: 'A Sammich'
+          restaurantid: ''
+          restaurantname: 'The Dumpster'
+          rating: '1'
+          latitude: '33.088388'
+          longitude: '-117.252548'
+        ),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      ).success((ratingData, status, headers, config) ->
+        console.log ratingData
+      ).error (data, status, headers, config) ->
   ])
 
   .controller("ItemDetailCtrl", ['$scope', '$routeParams', '$http', 'localStorageService', '$location', ($scope, $routeParams, $http, localStorageService, $location) ->
@@ -91,7 +111,7 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
         $scope.$apply ->
           $http(
             method: "GET"
-            url: "http://mfbackend.appspot.com/json/items?latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude + "&radius=30000"
+            url: "http://mfbackend.appspot.com/json/items?latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude + "&radius=1000000"
           ).success((itemData, status, headers, config) ->
             $scope.items = itemData.items
             $scope.rateItem = (rating, itemid, itemRating, i) ->
