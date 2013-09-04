@@ -28,7 +28,6 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
 
   .controller("LoginCtrl", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
     $scope.login = ->
-
       $http(
         method: 'POST',
         url: 'http://mfbackend.appspot.com/json/login',
@@ -77,29 +76,27 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
     window.navigator.geolocation.getCurrentPosition (position) ->
       lat = position.coords.latitude 
       lon = position.coords.longitude
-      radius = 1000000
-      console.log lat
-      console.log lon
-      $scope.submitItem  = (rating) ->
-        reviewUrl = 'http://mfbackend.appspot.com/json/reviewitem'
-        $http(
-          method: 'POST',
-          url: reviewUrl,
-          data: $.param(
-            userid: userId
-            authtoken: authValue
-            itemid: ''
-            itemname: 'Test Item'
-            restaurantid: ''
-            restaurantname: 'Test Restaurant'
-            rating: '1'
-            latitude: lat
-            longitude: lon
-          ),
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        ).success((ratingData, status, headers, config) ->
-          console.log ratingData
-        ).error (data, status, headers, config) ->
+      $scope.rateItem = (rating) ->
+        $scope.submitItem = ->
+          reviewUrl = 'http://mfbackend.appspot.com/json/reviewitem'
+          $http(
+            method: 'POST',
+            url: reviewUrl,
+            data: $.param(
+              userid: userId
+              authtoken: authValue
+              itemid: ''
+              itemname: $scope.item.name
+              restaurantid: ''
+              restaurantname: $scope.item.restaurant
+              rating: rating
+              latitude: lat
+              longitude: lon
+            ),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          ).success((ratingData, status, headers, config) ->
+            alert 'Your item submission was sent!'
+          ).error (data, status, headers, config) ->
   ])
 
   .controller("ItemDetailCtrl", ['$scope', '$routeParams', '$http', 'localStorageService', '$location', ($scope, $routeParams, $http, localStorageService, $location) ->
