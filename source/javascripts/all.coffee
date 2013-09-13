@@ -28,6 +28,7 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
 
   .controller("LoginCtrl", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
     $scope.login = ->
+
       $http(
         method: 'POST',
         url: 'http://mfbackend.appspot.com/json/login',
@@ -71,32 +72,26 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
   ])
 
   .controller("TestCtrl", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
-    authValue = localStorageService.get('authToken')
-    userId = localStorageService.get('userId')
-    window.navigator.geolocation.getCurrentPosition (position) ->
-      lat = position.coords.latitude 
-      lon = position.coords.longitude
-      $scope.rateItem = (rating) ->
-        $scope.submitItem = ->
-          reviewUrl = 'http://mfbackend.appspot.com/json/reviewitem'
-          $http(
-            method: 'POST',
-            url: reviewUrl,
-            data: $.param(
-              userid: userId
-              authtoken: authValue
-              itemid: ''
-              itemname: $scope.item.name
-              restaurantid: ''
-              restaurantname: $scope.item.restaurant
-              rating: rating
-              latitude: lat
-              longitude: lon
-            ),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-          ).success((ratingData, status, headers, config) ->
-            alert 'Your item submission was sent!'
-          ).error (data, status, headers, config) ->
+    $scope.submitItem  = (rating) ->
+      reviewUrl = 'http://mfbackend.appspot.com/json/reviewitem'
+      $http(
+        method: 'POST',
+        url: reviewUrl,
+        data: $.param(
+          userid: '43001'
+          authtoken: '3Ccjm92ePBJ1BkZMSinVzY'
+          itemid: ''
+          itemname: 'A Sammich'
+          restaurantid: ''
+          restaurantname: 'The Dumpster'
+          rating: '1'
+          latitude: '33.088388'
+          longitude: '-117.252548'
+        ),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      ).success((ratingData, status, headers, config) ->
+        console.log ratingData
+      ).error (data, status, headers, config) ->
   ])
 
   .controller("ItemDetailCtrl", ['$scope', '$routeParams', '$http', 'localStorageService', '$location', ($scope, $routeParams, $http, localStorageService, $location) ->
@@ -129,11 +124,22 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
                   userid: userId
                   authtoken: authValue
                   itemid: itemid
+                  itemname: itemData.items.rating
+                  restaurantid: $scope.items[i].restaurantid
+                  restaurantname: $scope.items[i].restaurantname
+                  rating: itemRating
+                  latitude: position.coords.latitude
+                  longitude: position.coords.longitude
+                  userid: userId
+                  authtoken: authValue
+                  itemid: itemid
                   rating: rating
                 ),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
               ).success((ratingData, status, headers, config) ->
-                console.log userId
+                console.log $scope.items[i].rating = ratingData.rating
               ).error (data, status, headers, config) ->
           ).error (data, status, headers, config) ->
+
+
   ])
