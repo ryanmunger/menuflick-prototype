@@ -14,7 +14,7 @@ gem 'rack-rewrite', '~> 1.2.1'
 gem "middleman-livereload", "~> 3.1.0"
 
 # For faster file watcher updates:
-# gem "wdm", "~> 0.1.0") # Windows
+gem "wdm", "~> 0.1.0" # Windows
 
 # Cross-templating language block fix for Ruby 1.8
 platforms :mri_18 do

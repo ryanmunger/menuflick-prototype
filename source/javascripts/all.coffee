@@ -8,6 +8,8 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
       .when('/sign-up', templateUrl: 'sign-up.html', controller: 'SignUpCtrl')
       .when('/submit-item', templateUrl: 'submit-item.html', controller: 'SubmitItemCtrl')
       .when('/profile', templateUrl: 'profile.html', controller: 'ProfileCtrl')
+      .when('/profile/lists', templateUrl: 'profilelists.html', controller: 'ProfileListCtrl')
+      .when('/settings', templateUrl: 'settings.html', controller: 'SettingsCtrl')
       .when('/test', templateUrl: 'test.html', controller: 'TestCtrl')
       .when('/404', templateUrl: '404.html')
       .otherwise(redirectTo: '/login')
@@ -99,7 +101,7 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
       method: "GET"
       url: "http://mfbackend.appspot.com/json/getitem?itemid=" + $routeParams.itemid
     ).success((data, status, headers, config) ->
-      $scope.items = data
+      $scope.item = data
     ).error (data, status, headers, config) ->
   ])
 
