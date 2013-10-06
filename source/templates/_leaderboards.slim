@@ -1,5 +1,5 @@
 == partial "partials/header"
-#conent.leaderboards ng-init="getLocation()"
+#content.leaderboards ng-init="getLocation()"
   ul
     li ng-repeat="item in items | filter:searchText"
       a ng-href="#/items/{{item.itemid}}" 
