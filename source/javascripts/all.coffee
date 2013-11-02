@@ -10,7 +10,6 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
       .when('/profile', templateUrl: 'profile.html', controller: 'ProfileCtrl')
       .when('/profile/lists', templateUrl: 'profilelists.html', controller: 'ProfileListCtrl')
       .when('/settings', templateUrl: 'settings.html', controller: 'SettingsCtrl')
-      .when('/test', templateUrl: 'test.html', controller: 'TestCtrl')
       .when('/404', templateUrl: '404.html')
       .otherwise(redirectTo: '/login')
   ])
@@ -73,29 +72,6 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
   .controller("ProfileCtrl", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
   ])
 
-  .controller("TestCtrl", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
-    $scope.submitItem  = (rating) ->
-      reviewUrl = 'http://mfbackend.appspot.com/json/reviewitem'
-      $http(
-        method: 'POST',
-        url: reviewUrl,
-        data: $.param(
-          userid: '43001'
-          authtoken: '3Ccjm92ePBJ1BkZMSinVzY'
-          itemid: ''
-          itemname: 'A Sammich'
-          restaurantid: ''
-          restaurantname: 'The Dumpster'
-          rating: '1'
-          latitude: '33.088388'
-          longitude: '-117.252548'
-        ),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      ).success((ratingData, status, headers, config) ->
-        console.log ratingData
-      ).error (data, status, headers, config) ->
-  ])
-
   .controller("ItemDetailCtrl", ['$scope', '$routeParams', '$http', 'localStorageService', '$location', ($scope, $routeParams, $http, localStorageService, $location) ->
     $http(
       method: "GET"
@@ -144,4 +120,43 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
           ).error (data, status, headers, config) ->
 
 
+  ])
+
+  .controller("SubmitItemCtrl", ['$scope', '$rootScope', '$http', 'localStorageService', '$location', ($scope, $rootScope, $http, localStorageService, $location) ->
+
+    $scope.voteUp = (rating) ->
+      $scope.disable = true
+      $scope.disable2 = false
+      $scope.rating = rating
+
+    $scope.voteDown = (rating) ->
+      $scope.disable2 = true
+      $scope.disable = false
+      $scope.rating = rating
+      $scope.getLocation = ->
+
+    window.navigator.geolocation.getCurrentPosition (position) ->
+      $scope.$apply ->
+        $scope.submitItem  = () ->
+          authValue = localStorageService.get('authToken')
+          userId = localStorageService.get('userId')
+          reviewUrl = 'http://mfbackend.appspot.com/json/reviewitem'
+          $http(
+            method: 'POST',
+            url: reviewUrl,
+            data: $.param(
+              userid: userId
+              authtoken: authValue
+              itemid: ''
+              itemname: $scope.item.itemname
+              restaurantid: ''
+              restaurantname: $scope.item.restaurantname
+              rating: $scope.rating
+              latitude: position.coords.latitude
+              longitude: position.coords.longitude
+            ),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          ).success((ratingData, status, headers, config) ->
+            console.log ratingData
+          ).error (data, status, headers, config) ->
   ])
