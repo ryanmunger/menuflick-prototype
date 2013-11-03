@@ -2,14 +2,13 @@
 #content
   h1 Submit An Item!
   form ng-submit="submitItem()"
-    input type="text" ng-model="item.itemname" autocapitalize="off" placeholder="What did you eat?" style="margin-bottom: 20px;"
+    input type="text" ng-model="item.itemname" autocapitalize="off" placeholder="What did you eat?"
     input type="text" ng-model="item.restaurantname" autocapitalize="off" placeholder="Where did you eat it?"
-    div style="margin-top: 20px;"
-      button style="display: block; width: 33.33333%; margin-bottom: 10px; float: left; height: 44px;" ng-click="voteUp(100)" ng-disabled="disable"
-        ' +
-      button style="display: block; width: 33.33333%; margin-bottom: 20px; float: left; height: 44px;" ng-click="voteMeh(50)" ng-disabled="disable1"
-        ' 0
-      button style="display: block; width: 33.33333%; margin-bottom: 20px; float: left; height: 44px;" ng-click="voteDown(0)" ng-disabled="disable2"
-        ' -
+    button style="display: block; width: 33.33333333333333333333333%; margin-bottom: 10px; float: left; height: 44px; margin-top: 10px;" ng-click="voteUp(100)" ng-disabled="disable"
+      ' +
+    button style="display: block; width: 33.33333333333333333333333%; margin-bottom: 10px; float: left; height: 44px; margin-top: 10px;" ng-click="voteMeh(50)" ng-disabled="disable1"
+      ' |
+    button style="display: block; width: 33.33333333333333333333333%; margin-bottom: 20px; float: left; height: 44px; margin-top: 10px;" ng-click="voteDown(0)" ng-disabled="disable2"
+      ' -
     button style="display: block; width: 100%; height: 40px; margin-top: 20px;"
       ' Submit
