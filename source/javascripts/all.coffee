@@ -126,37 +126,46 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
 
     $scope.voteUp = (rating) ->
       $scope.disable = true
+      $scope.disable1 = false
+      $scope.disable2 = false
+      $scope.rating = rating
+
+    $scope.voteMeh = (rating) ->
+      $scope.disable = false
+      $scope.disable1 = true
       $scope.disable2 = false
       $scope.rating = rating
 
     $scope.voteDown = (rating) ->
-      $scope.disable2 = true
       $scope.disable = false
+      $scope.disable1 = false
+      $scope.disable2 = true
       $scope.rating = rating
-      $scope.getLocation = ->
 
-    window.navigator.geolocation.getCurrentPosition (position) ->
-      $scope.$apply ->
-        $scope.submitItem  = () ->
-          authValue = localStorageService.get('authToken')
-          userId = localStorageService.get('userId')
-          reviewUrl = 'http://mfbackend.appspot.com/json/reviewitem'
-          $http(
-            method: 'POST',
-            url: reviewUrl,
-            data: $.param(
-              userid: userId
-              authtoken: authValue
-              itemid: ''
-              itemname: $scope.item.itemname
-              restaurantid: ''
-              restaurantname: $scope.item.restaurantname
-              rating: $scope.rating
-              latitude: position.coords.latitude
-              longitude: position.coords.longitude
-            ),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-          ).success((ratingData, status, headers, config) ->
-            console.log ratingData
-          ).error (data, status, headers, config) ->
+    $scope.getLocation = ->
+
+      window.navigator.geolocation.getCurrentPosition (position) ->
+        $scope.$apply ->
+          $scope.submitItem  = () ->
+            authValue = localStorageService.get('authToken')
+            userId = localStorageService.get('userId')
+            reviewUrl = 'http://mfbackend.appspot.com/json/reviewitem'
+            $http(
+              method: 'POST',
+              url: reviewUrl,
+              data: $.param(
+                userid: userId
+                authtoken: authValue
+                itemid: ''
+                itemname: $scope.item.itemname
+                restaurantid: ''
+                restaurantname: $scope.item.restaurantname
+                rating: $scope.rating
+                latitude: position.coords.latitude
+                longitude: position.coords.longitude
+              ),
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            ).success((ratingData, status, headers, config) ->
+              console.log ratingData
+            ).error (data, status, headers, config) ->
   ])
