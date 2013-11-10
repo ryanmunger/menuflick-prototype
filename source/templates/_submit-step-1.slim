@@ -1,0 +1,17 @@
+#content.leaderboards ng-init="getLocation()"
+  ul
+    li ng-repeat="item in items | filter:newRestaurant"
+      a ng-href="#/submit-step-2/{{item.restaurantid}}" 
+        ' Distance: {{item.distance * 0.000621371 | number: 1}}
+        br
+        ' {{item.restaurantname }}
+  .warning ng-if="(items | filter:newRestaurant).length === 0"
+    h3 Dang! The restaurant you're looking for can't be found. 
+    p But wait! Just finish typing in the name of the restaurant you <em>are</em> looking for. 
+    p After that, just click "Add a new location" and our magical, flying unicorns will whisk it away into our system.
+  .fixed-bottom
+    input ng-model="newRestaurant" type="text" style="height: 20px;" placeholder="Can't find a specific restaurant?"
+    button type="submit" ng-click="go('submit-step-2')"  Add a new location
+
+  button ng-click="logout()"
+    ' Logout

@@ -1,0 +1,12 @@
+a ng-href="#/"
+  ' Home
+
+#content.item-detail
+  h2 No Items this restaurant (yet!). Add one below.
+
+  .fixed-bottom
+    input ng-model="newItem" type="text" style="height: 20px;" placeholder="Next step is to add the item you just had!"
+    button type="submit" ng-click="go('submit-step-3')" Add a new item
+
+  button ng-click="logout()"
+    ' Logout

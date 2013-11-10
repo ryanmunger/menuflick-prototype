@@ -1,0 +1,19 @@
+a ng-href="#/"
+  ' Home
+
+#content.item-detail
+  li ng-repeat="item in items | filter:newItem"
+    a ng-href="#/submit-step-3/{{item.itemid}}" 
+      ' {{ item.name }}
+
+  .warning ng-if="(items | filter:newItem).length === 0"
+    h3 Dang! The item you're looking for can't be found. 
+    p But wait! Just finish typing in the name of the item you <em>are</em> looking for. 
+    p After that, just click "Add a new item" and our magical, flying unicorns will whisk it away into our system.
+
+  .fixed-bottom
+    input ng-model="newItem" type="text" style="height: 20px;" placeholder="Next step is to add the item you just had!"
+    button type="submit" ng-click="go('submit-step-3')" Add a new item
+
+  button ng-click="logout()"
+    ' Logout
