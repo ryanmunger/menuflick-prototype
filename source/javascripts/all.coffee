@@ -1,4 +1,17 @@
 angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
+  
+  .filter 'titleize', ->
+    (input) ->
+      toTitleCase = (input) ->
+        input.replace /\w\S*/g, (txt) ->
+          txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+      toTitleCase(input)
+
+  .directive "animateHeader", ->
+    restrict: "CA"
+    link: (scope, elem, attrs) ->
+      elem.on 'click', ->
+        elem.parent().parent().parent().parent().parent().toggleClass('open')
 
   .config(['$routeProvider', ($routeProvider) ->
     $routeProvider
@@ -32,7 +45,6 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
 
   .controller("LoginCtrl", ['$scope', '$http', 'localStorageService', '$location', ($scope, $http, localStorageService, $location) ->
     $scope.login = ->
-
       $http(
         method: 'POST',
         url: 'http://mfbackend.appspot.com/json/login',
@@ -228,7 +240,6 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
           ).error (data, status, headers, config) ->
   ])
 
-
   .controller("LeaderBoardsCtrl", ['$scope', '$rootScope', '$http', 'localStorageService', ($scope, $rootScope, $http, localStorageService) ->
     authValue = localStorageService.get('authToken')
     userId = localStorageService.get('userId')
@@ -239,6 +250,7 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
             method: "GET"
             url: "http://mfbackend.appspot.com/json/items?latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude + "&radius=1000000"
           ).success((itemData, status, headers, config) ->
+            console.log(itemData.name);
             $scope.items = itemData.items
             $scope.rateItem = (rating, itemid, itemRating, i) ->
               console.log itemid
@@ -263,7 +275,6 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
                 ),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
               ).success((ratingData, status, headers, config) ->
-                console.log $scope.items[i].rating = ratingData.rating
               ).error (data, status, headers, config) ->
           ).error (data, status, headers, config) ->
   ])

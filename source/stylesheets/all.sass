@@ -1,38 +1,44 @@
-.leaderboards
-  ul
-    margin: 10px 0 0 0
-    padding: 0
-    li
-      border-bottom: 1px solid #ccc
-      list-style-type: none
-      padding: 15px 5px
-
-.input-wrapper
-  padding: 10px
-  margin: 10px
-
-input
-  width: 100%
-  height: 40px
-  border: 1px solid #ccc
-  padding: 4px
-
-.restaurant
-  display: block
-  text-transform: uppercase
-  font-size: 14px
-  color: #666
-
 body
-  margin: 0 20px
+  font-size: 16px
 
-.fixed-bottom
-  width: 100%
-  padding: 10px
-  background: #fff
+header
+  height: 44px
+  line-height: 44px
+  overflow: hidden
   position: fixed
-  bottom: 0
-  left: 0
-
-.warning
-  transition: all .5s
+  width: 100%
+  position: relative
+  .main-nav
+    transition: all .3s
+    background: #d5d5d5
+    margin-top: 0
+    a
+      color: #989898
+      &:active, &:hover
+        color: #989898
+      &.glyphicon-align-justify
+        margin-top: 13px
+  .sub-nav
+    background: #eb2426
+  a
+    color: #fff
+    padding: 0 7px
+    font-weight: bold
+    &:first-child
+      padding-left: 0
+    &:last-child
+      padding-right: 10px
+      margin-top: 14px
+    &:active, &:hover
+      color: #fff
+      text-decoration: none
+  &.open
+    .main-nav
+      margin-top: -44px
+.hitpoint
+  height: 44px
+  position: absolute
+  right: 0
+  width: 44px
+  top: 0
+  text-align: center
