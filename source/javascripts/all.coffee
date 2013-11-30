@@ -108,7 +108,7 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
         $scope.$apply ->
           $http(
             method: "GET"
-            url: "http://mfbackend.appspot.com/json/items?latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude + "&radius=1000000"
+            url: "http://mfbackend.appspot.com/json/items?latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude + "&radius=500"
           ).success((itemData, status, headers, config) ->
             $scope.items = itemData.items
             $scope.rateItem = (rating, itemid, itemRating, i) ->
