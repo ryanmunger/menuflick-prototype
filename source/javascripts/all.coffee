@@ -13,6 +13,12 @@ angular.module('MenuFlick', ['ngMobile', 'LocalStorageModule'])
       elem.on 'click', ->
         elem.parent().parent().parent().parent().parent().toggleClass('open')
 
+  .directive "showSearch", ->
+    restrict: "CA"
+    link: (scope, elem, attrs) ->
+      elem.on 'click', ->
+        $('.search').toggleClass('show-search')
+
   .config(['$routeProvider', ($routeProvider) ->
     $routeProvider
       .when('/', templateUrl: 'leaderboards.html', controller: 'LeaderBoardsCtrl')

@@ -3,7 +3,7 @@
   ul
     li ng-repeat="item in items | filter:searchText"
       br
-      ' Distance: {{item.distance * 0.000621371 | number: 1}}
+      ' Distance: {{item.distance * 0.000621371 | number: 1}} Miles
       br
       ' {{item.restaurantname | titleize}}
   button ng-click="logout()"
