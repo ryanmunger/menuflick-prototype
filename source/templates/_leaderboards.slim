@@ -1,10 +1,20 @@
 == partial "partials/header"
 #content.leaderboards ng-init="getLocation()"
-  ul
-    li ng-repeat="item in items | filter:searchText"
-      br
-      ' Distance: {{item.distance * 0.000621371 | number: 1}} Miles
-      br
-      ' {{item.restaurantname | titleize}}
-  button ng-click="logout()"
-    ' Logout
+  .table-responsive
+    table.table.table-striped
+      thead
+        tr
+          th 
+            .pull-left 
+              ' Restaurant
+          th 
+            .pull-right
+              ' Distance
+      tr ng-repeat="item in items | filter:searchText"
+        td
+          .pull-left
+            ' {{item.restaurantname | titleize}}
+        td
+          .pull-right
+            ' {{item.distance * 0.000621371 | number: 1}}mi
+== partial "partials/footer"

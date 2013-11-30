@@ -1,14 +1,21 @@
 body
   font-size: 16px
 
+#main
+  padding-top: 45px
+  padding-bottom: 45px
+ul
+  list-style: none
+  padding-left: 0
+
 header
+  top: 0
   z-index: 1
   height: 44px
   line-height: 44px
   overflow: hidden
   position: fixed
   width: 100%
-  position: relative
   .main-nav
     transition: all .3s
     background: #d5d5d5
@@ -51,9 +58,29 @@ input[type="text"]
   font-size: 14px
   border-radius: 0
 .search
-  margin-top: -46px
   z-index: 0
-  margin-bottom: 20px
   transition: all .3s
+  margin-bottom: 10px
+  height: 0
+  overflow: hidden
 .show-search
-  margin-top: 0
+  height: 46px
+footer
+  position: fixed
+  width: 100%
+  bottom: 0
+  height: 44px
+  background: #d5d5d5
+  line-height: 44px
+  a
+    color: #999
+    font-weight: bold
+    &:hover, &:active
+      text-decoration: none
+      color: #999
+  .glyphicon
+    margin-top: 14px
+
+thead
+  th
+    border-bottom: none !important
